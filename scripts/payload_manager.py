@@ -21,7 +21,23 @@ class PayloadManager:
             "~model_file",
             "../models/Phone/model.sdf"
         )
-        self.offset = rospy.get_param("~offset", [0.0, 0.18, 0.25])  # x, y, z в системе дрона
+
+        raw_offset = rospy.get_param("~offset", "[0.0, 0.18, 0.25]")
+        if isinstance(raw_offset, str):
+            try:
+                raw_offset = raw_offset[1:-1]
+                self.offset =  [float(x) for x in raw_offset.split(", ")]
+            except Exception as e:
+                rospy.logwarn("Failed to parse offset parameter, using default: %s", e)
+                self.offset = [0.0, 0.18, 0.25]
+        else:
+            self.offset = raw_offset
+
+        # Убедимся, что это список из 3 чисел
+        if not isinstance(self.offset, (list, tuple)) or len(self.offset) != 3:
+            rospy.logerr("Invalid offset parameter, must be list of 3 numbers. Got: %s", self.offset)
+            self.offset = [0.0, 0.18, 0.25]
+
         self.model_file = os.path.expanduser(self.model_file)
 
         if not os.path.isfile(self.model_file):

@@ -2,7 +2,7 @@
   <!-- Параметры payload -->
   <arg name="model_name" default="box"/>
   <arg name="offset_x" default="0.0"/>
-  <arg name="offset_y" default="0.08"/>
+  <arg name="offset_y" default="0.21"/>
   <arg name="offset_z" default="0.25"/>
 
   <node name="payload_manager" pkg="clover_payload" type="payload_manager.py" output="screen">

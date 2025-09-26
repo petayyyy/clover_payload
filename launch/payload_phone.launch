@@ -1,0 +1,13 @@
+<launch>
+  <!-- Параметры payload -->
+  <arg name="model_name" default="Phone"/>
+  <arg name="offset_x" default="0.0"/>
+  <arg name="offset_y" default="0.18"/>
+  <arg name="offset_z" default="0.25"/>
+
+  <node name="payload_manager" pkg="clover_payload" type="payload_manager.py" output="screen">
+    <param name="model_name" value="$(arg model_name)"/>
+    <param name="model_file" value="$(find clover_payload)/models/$(arg model_name)/model.sdf"/>
+    <param name="offset" value="[$(arg offset_x), $(arg offset_y), $(arg offset_z)]"/>
+  </node>
+</launch>

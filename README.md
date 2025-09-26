@@ -13,8 +13,21 @@ ROS package for simulated payload delivery with the **Clover drone** in **Gazebo
 - Fully compatible with `clover_simulation`.
 
 ## Usage
-
+Команда сброса груза.
 ```bash
-rosrun clover_payload payload_manager.py _offset:="[0.0, 0.18, -0.1]"
 rosservice call /release_load
+```
+Команда повторной установки груза.
+```bash
 rosservice call /reset_delivery
+```
+## Add to Clover simulator
+Откройте simulator.launch и модифицируйте его добавив в конце.
+```bash
+<include file="$(find clover_payload)/launch/payload_phone.launch">
+</include>
+```
+Откройте ваш файл мира и добавте до закрывающего блока `</world>` строку.
+```bash
+<plugin name="link_attacher" filename="libgazebo_ros_link_attacher.so"/>
+``` 

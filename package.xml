@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>delivery_drone</name>
+  <name>clover_payload</name>
   <version>0.0.0</version>
-  <description>The delivery_drone package</description>
+  <description>The clover_payload package</description>
 
   <maintainer email="ubuntu_20_fgdr@todo.todo">ubuntu_20_fgdr</maintainer>
 

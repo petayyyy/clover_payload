@@ -12,6 +12,12 @@ ROS package for simulated payload delivery with the **Clover drone** in **Gazebo
 - Uses Gazebo model state (not TF) for fast and reliable positioning.
 - Fully compatible with `clover_simulation`.
 
+## Install
+.bashrc
+```bash
+export GAZEBO_PLUGIN_PATH=$GAZEBO_PLUGIN_PATH~/catkin_ws/devel/lib
+```
+
 ## Usage
 Команда сброса груза.
 ```bash

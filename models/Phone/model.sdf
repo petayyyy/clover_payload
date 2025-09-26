@@ -3,6 +3,8 @@
   <model name='Phone'>
     <pose>0 0 0 0 0 0</pose>
     <static>false</static>
+
+    <!-- Основной корпус телефона -->
     <link name='link'>
       <inertial>
         <mass>0.001</mass>
@@ -16,6 +18,9 @@
       <collision name="collision">
         <geometry>
           <box>
+            <!-- Размеры: X=ширина, Y=толщина, Z=высота -->
+            <!-- У вас: X=0.071 м, Y=0.008 м, Z=0.144 м -->
+            <!-- Телефон стоит вертикально (Z — вверх) -->
             <size>0.071 0.008 0.144</size>
           </box>
         </geometry>
@@ -28,5 +33,74 @@
         </geometry>
       </visual>
     </link>
+
+    <!-- Линк камеры -->
+    <link name='phone_camera_link'>
+      <pose>0.025 0.004 0.06 0 0 1.5708</pose>
+
+      <inertial>
+        <mass>0.000000001</mass>
+        <inertia>
+          <ixx>4.15e-6</ixx>
+          <iyy>2.407e-6</iyy>
+          <izz>2.407e-6</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial>
+
+      <!-- Сенсор камеры -->
+      <sensor name='phone_camera' type='camera'>
+        <camera>
+          <horizontal_fov>2.0944</horizontal_fov> <!-- 120 градусов -->
+          <image>
+            <width>640</width>
+            <height>480</height>
+            <format>B8G8R8</format>
+          </image>
+          <clip>
+            <near>0.02</near>  <!-- 2 см -->
+            <far>1000</far>    <!-- 1 км -->
+          </clip>
+          <distortion>
+            <k1>0</k1>
+            <k2>0</k2>
+            <k3>0</k3>
+            <p1>0</p1>
+            <p2>0</p2>
+            <center>0.5 0.5</center>
+          </distortion>
+        </camera>
+        <always_on>1</always_on>
+        <update_rate>40</update_rate>
+        <visualize>0</visualize> <!-- Показывать конус камеры в Gazebo -->
+
+        <!-- Плагин для публикации в ROS -->
+        <plugin name='camera_plugin' filename='libgazebo_ros_camera.so'>
+          <alwaysOn>true</alwaysOn>
+          <updateRate>40.0</updateRate>
+          <cameraName>phone_camera</cameraName>
+          <!-- Топики -->
+          <imageTopicName>/phone_camera/image_raw</imageTopicName>
+          <cameraInfoTopicName>/phone_camera/camera_info</cameraInfoTopicName>
+          <!-- Имя фрейма для TF (рекомендуется optical) -->
+          <frameName>phone_camera_optical</frameName>
+          <!-- Параметры калибровки (можно оставить 0, если нет дисторсии) -->
+          <distortionK1>0.0</distortionK1>
+          <distortionK2>0.0</distortionK2>
+          <distortionK3>0.0</distortionK3>
+          <distortionT1>0.0</distortionT1>
+          <distortionT2>0.0</distortionT2>
+        </plugin>
+      </sensor>
+    </link>
+
+    <!-- Жёсткое соединение камеры с корпусом -->
+    <joint name='phone_camera_joint' type='fixed'>
+      <parent>link</parent>
+      <child>phone_camera_link</child>
+    </joint>
+
   </model>
 </sdf>

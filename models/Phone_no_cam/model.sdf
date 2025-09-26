@@ -1,0 +1,37 @@
+<?xml version='1.0' ?>
+<sdf version='1.6'>
+  <model name='Phone_no_cam'>
+    <pose>0 0 0 0 0 0</pose>
+    <static>false</static>
+
+    <!-- Основной корпус телефона -->
+    <link name='link'>
+      <inertial>
+        <mass>0.001</mass>
+        <inertia>
+          <ixx>1e-5</ixx>
+          <iyy>1e-5</iyy>
+          <izz>1e-5</izz>
+        </inertia>
+      </inertial>
+
+      <collision name="collision">
+        <geometry>
+          <box>
+            <!-- Размеры: X=ширина, Y=толщина, Z=высота -->
+            <!-- У вас: X=0.071 м, Y=0.008 м, Z=0.144 м -->
+            <!-- Телефон стоит вертикально (Z — вверх) -->
+            <size>0.071 0.008 0.144</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name='visual'>
+        <geometry>
+          <mesh>
+            <uri>model://Phone_no_cam/meshes/Phone.dae</uri>
+          </mesh>
+        </geometry>
+      </visual>
+    </link>
+  </model>
+</sdf>
